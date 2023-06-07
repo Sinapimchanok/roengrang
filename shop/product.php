@@ -1,0 +1,178 @@
+<?php 
+    session_start();
+    include_once('functions.php'); 
+
+    $sql = new DB_con();
+
+    if ($_SESSION['user_role'] == "2") {
+        if ($_SESSION['shop_id']){
+            $user_shop = $sql->shopavailable($_SESSION['shop_id']);
+            $User_shop=mysqli_fetch_array($user_shop);
+            if ($_SESSION['id'] == $User_shop['user_id'] ) {
+?>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>ร้านค้าชุมชนเริงราง</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-light">
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link order-1 order-lg-0 me-4 me-lg-0" style="color:black;" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-1" style="color:black;" href="index.php">
+                <img src="\roengrang\img/logo1.png" alt="logo" height="36"> ร้านค้าชุมชนเริงราง
+            </a>
+            
+            <!-- Navbar Message-->
+            <button class="d-none d-md-inline-block btn btn-link ms-auto me-3 me-lg-0 text-decoration-none" style="color:black;" id="sidebarToggle">
+            <i class="fa-brands fa-shopify"></i> 
+            <a class="text-decoration-none" style="color:black;" href="goCustomer.php">
+                โหมดช็อปปิ้ง
+            </a>
+            </button>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" style="color:black;" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i> <?=$_SESSION['fname']?></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="#!">ตั้งค่าบัญชี</a>
+                        </li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="/roengrang/logout.php">ออกจากระบบ</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <a class="nav-link" href="index.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                ภาพรวมของระบบ
+                            </a>
+                            <a class="nav-link" href="order.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                คำสั่งซื้อ
+                            </a>
+                            <a class="nav-link" href="review.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
+                                รีวิวคำสั่งซื้อ และร้านค้า
+                            </a>
+                            <a class="nav-link" href="report.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-coins"></i></div>
+                                การเงิน
+                            </a>
+                            <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#ProductLayout" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
+                                สินค้า
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="ProductLayout" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="allproduct.php">จัดการสินค้า</a>
+                                    <a class="nav-link" href="addproduct.php">เพิ่มสินค้า</a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer text-center">
+                        ร้าน <?=$_SESSION['shop_name']?>
+                    </div>
+                </nav>
+            </div>
+
+            <div id="layoutSidenav_content">
+
+
+                <main>
+                    <div class="container px-4 px-lg-5 my-5">
+                        <div class="row gx-4 gx-lg-5 align-items-center">
+                            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." /></div>
+                            <div class="col-md-6">
+                                <h1 class="display-5 fw-bolder">น้ำแตงโมปั่น</h1>
+                                <div class="fs-5 mb-5">
+                                    <span class="text-decoration-line-through">$45.00</span>
+                                    <span>$40.00</span>
+                                </div>
+                                <p class="lead">Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
+                                <div >
+                                    จำนวนคงเหลือ <a class="btn btn-outline-primary">-</a> 10 <a class="btn btn-outline-primary">+</a>
+                                    <hr>
+                                    <button class="btn btn-outline-danger flex-shrink-0" type="button">
+                                        ระงับการขาย
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <h3>ความคิดเห็น</h3>
+                        <hr>
+                        <div class="card mb-3">
+                            <div class="card-header"> นายพล ประกายสิทธิ์</div>
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="#"></a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-header"> นายพล ประกายสิทธิ์</div>
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="#"></a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-header"> นายพล ประกายสิทธิ์</div>
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="#"></a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-header"> นายพล ประกายสิทธิ์</div>
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="#"></a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                        <p ALIGN="center">
+                            <a>ดูเพิ่มเติม</a>
+                        </p>
+
+                    </div>  
+                </main>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="assets/demo/chart-area-demo.js"></script>
+        <script src="assets/demo/chart-bar-demo.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="js/datatables-simple-demo.js"></script>
+    </body>
+</html>
+
+<?php 
+      }
+            else{
+            header("location: 401.php");}
+        }
+        else{
+        header("location: 401.php");}
+    }
+    else{
+    header("location: 401.php");}      
+?>
